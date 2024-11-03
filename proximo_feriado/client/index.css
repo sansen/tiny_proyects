@@ -1,0 +1,59 @@
+body {
+   font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+#wrapper-countdown {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+}
+#wrapper-countdown .countdown {
+    width:150px;
+    height: 150px;
+}
+#wrapper-countdown .countdown-text {
+    wdith:100px;
+}
+#wrapper-countdown .countdown div {
+    display: inline-block;
+    position: relative;
+    margin:0;
+    top: 0;	      
+    width: 0;
+    height: 150px;
+    border-radius: 10px;
+    color: darkslategrey;
+    background: skyblue;
+    padding: 0;
+    line-height: 150px;
+    text-align: center;
+    font-size: 0;
+    transition: width 0.5s ease-in-out;
+    float: left;
+}
+#wrapper-countdown .countdown div.active {
+    display: inline-block;
+    height: 150px;
+    width: 150px;
+    font-size:64px;
+    /*transition: height 1s ease-in-out;*/
+    transition: width 0.5s ease-in-out;
+    overflow:hidden;
+}  
+#wrapper-countdown .countdown div.active.today {
+    background-color: springgreen;    
+}
+#proximo-feriado {
+    display: block;
+    text-align: center;
+    font-size: 32px;
+}
+#htmlx-result {
+    display:none;
+}

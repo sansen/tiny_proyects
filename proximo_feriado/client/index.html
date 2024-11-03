@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proximo Feriado</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    </head>
+  <body>
+    <div id="wrapper-countdown">
+      <div>
+	<div class="countdown days">
+	  <div id="days-odd" class="active"></div>
+	  <div id="days-even"></div>
+	</div>
+	<div class="countdown-text">Dias</div>
+      </div>
+      <div>
+	<div class="countdown hours">
+	  <div id="hours-odd" class="active"></div>
+	  <div id="hours-even"></div>
+	</div>
+	<div class="countdown-text">Horas</div>
+      </div>
+      <div>
+	<div class="countdown minutes">
+	  <div id="minutes-odd" class="active"></div>
+	  <div id="minutes-even"></div>
+	</div>
+	<div class="countdown-text">Minutos</div>
+      </div>
+      <div>
+	<div class="countdown seconds">
+	  <div id="seconds-odd" class="active"></div>
+	  <div id="seconds-even"></div>
+	</div>
+	<div class="countdown-text">Segundos</div>
+      </div>
+    </div>
+    <div id="htmlx-result"
+	 hx-get="http://localhost:5000/"
+	 hx-trigger="load">
+    </div>
+    <div id="proximo-feriado"></div>
+    <script
+      src="https://unpkg.com/htmx.org@1.9.6"
+      integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
+      crossorigin="anonymous"
+      ></script>
+    <script src="index.js"></script>
+  </body>
+</html>
