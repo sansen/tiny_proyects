@@ -3,13 +3,22 @@ const cors = require('cors');
 
 const app = express();
 var db = require("./database.js")
+
+app.use(express.json());
 app.use(cors());
 
+
 app.get('/', (req, res) => {
-    var sql = "SELECT * FROM feriados WHERE fecha >= date('now') ORDER BY fecha limit 1";//WHERE fecha > date('now')" // ORDER BY id DESC limit 1";
+    var sql = "SELECT * FROM feriados WHERE fecha >= date('now') ORDER BY fecha limit ?";
     var params = [];
-    db.get(sql, params, (err, row) => {
-	console.log(row)
+
+    var limit = 1 
+    if (typeof req.query.limit !== 'undefined')
+	limit = req.query.limit
+
+    params.push(limit)
+
+    db.all(sql, params, (err, row) => {
         if (err) {
             res.status(400).json({"error":err.message});
             return;
@@ -21,21 +30,71 @@ app.get('/', (req, res) => {
     });
 });
 
-app.listen(5000, () => console.log('Example app is listening on port 5000.'));
 
+app.get('/proximasfechas', (req, res) => {
+    var sql = "SELECT * FROM feriados WHERE fecha > date('now') ORDER BY fecha limit 99"
+    var params = [];
 
-function getNextFeriado(db) {
-    var sql = "SELECT * FROM feriados WHERE fecha > NOW() ORDER BY id DESC limit 1 "
-    var params = []
-    return db.get(sql, params, (err, row) => {
+    db.all(sql, params, (err, row) => {
         if (err) {
             res.status(400).json({"error":err.message});
             return;
         }
-        return {
+        res.json({
             "message":"success",
             "data":row
-        }
+        })
     });
-}
+});
+
+
+app.get('/proximasfechas/:id', (req, res) => {
+    var sql = "SELECT * FROM feriados WHERE id=?"
+    var params = [req.params.id];
+
+    db.all(sql, params, (err, row) => {
+        if (err) {
+            res.status(400).json({"error":err.message});
+            return;
+        }
+        res.json({
+            "message":"success",
+            "data":row
+        })
+    });
+});
+
+
+app.post('/proximasfechas/create', (req, res) => {
+    var insert = 'INSERT OR REPLACE INTO feriados (fecha, descripcion) VALUES (?,?) ';
+    db.run(insert, [req.body.fecha, req.body.descripcion]);
+
+    res.send({
+     	"fecha": req.body.fecha,
+     	"descripcion": req.body.descripcion
+    });
+});
+
+
+app.get('/delete/:id', (req, res) => {
+    var deleteQuery = 'DELETE FROM feriados where id = ?';
+    db.run(deleteQuery, [req.params.id]);
+
+    res.send({
+	res: 'ok'
+    });
+});
+
+
+app.patch('/edit/:id', (req, res) => {
+    var editQuery = 'UPDATE feriados SET fecha = ?, descripcion = ? WHERE id = ?';
+    db.run(editQuery, [req.body.fecha, req.body.descripcion, req.params.id]);
+
+    res.send({
+	res: 'ok'
+    });
+});
+
+
+app.listen(5000, () => console.log('Example app is listening on port 5000.'));
 
