@@ -1,0 +1,12 @@
+.numericPad, .operationPad {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: inherit;
+    justify-content: space-around;
+}
+.numericPad button {
+    width: 30%;
+}
+.operationPad button {
+    flex-basis: 12%;
+}
